@@ -23,6 +23,7 @@ This "tool" is currently provided as-is and not very userfriendly. However it do
 
 In case I one day find a time to fix this the following features could be handy:
 
+- Check why project sections are not working via API quickadditem (`#Project /Section` works via client app)
 - Create release pipeline to at least produce an executeable
 - Support import of past events (e.g. as yearly  recurring reminders)
 - Use proper OAuth flow with Todoist API

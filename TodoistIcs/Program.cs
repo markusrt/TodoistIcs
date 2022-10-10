@@ -10,7 +10,8 @@ var config = new ConfigurationBuilder()
     .Build();
 var appSettings = config.GetRequiredSection("TodoistIcs").Get<TodoistIcs.Configuration.TodoistIcs>();
 
-var calendarContent = await new HttpClient().GetStringAsync(appSettings.ICalUrl);
+using var httpClient = new HttpClient();
+var calendarContent = await httpClient.GetStringAsync(appSettings.ICalUrl);
 var service = new CalendarToQuickAddItemService(Calendar.Load(calendarContent), appSettings);
 
 var items = service.CreateQuickAddItems();
@@ -20,7 +21,7 @@ if(!items.Any())
 }
 else
 {
-    var client = new TodoistClient(appSettings.ApiAccessToken);
+    using var client = new TodoistClient(appSettings.ApiAccessToken);
     foreach (var item in items)
     {
         Console.WriteLine($"Adding task: {item.Text}");
