@@ -121,11 +121,11 @@ namespace TodoistIcs.Tests
         {
             var sut = CreateSut(out var calendar, out var config);
             config.DayOffset = -1;
-            calendar.Events.Add(CreateEvent("Birthday", new DateTime(2022, 11, 10)));
+            calendar.Events.Add(CreateEvent("Birthday", new DateTime(8022, 11, 10)));
 
             var item = sut.CreateQuickAddItems().Single();
 
-            item.Text.Should().Be("Birthday 2022-11-09 p4");
+            item.Text.Should().Be("Birthday 8022-11-09 p4");
         }
         
         private static CalendarEvent CreateEvent(string summary, DateTime? start = null)
