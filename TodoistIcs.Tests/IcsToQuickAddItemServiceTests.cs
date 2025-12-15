@@ -56,16 +56,31 @@ namespace TodoistIcs.Tests
             sut.CreateQuickAddItems().Should().HaveCount(1);
         }
 
+        [Test]
+        public void EmptyIgnoredEvents_AllAddedToQuickAddItem()
+        {
+            var sut = CreateSut(out var calendar, out var config);
+            config.IgnoredEvents = new Collection<string>();
+            calendar.Events.Add(CreateEvent("Summary"));
+            calendar.Events.Add(CreateEvent(""));
+            calendar.Events.Add(CreateEvent("Remember Me"));
+            calendar.Events.Add(CreateEvent("Important Task"));
+            calendar.Events.Add(CreateEvent("Try this"));
+            calendar.Events.Add(CreateEvent("Watch out"));
+
+            sut.CreateQuickAddItems().Should().HaveCount(6);
+        }
+
 
         [Test]
         public void PastEvents_AreNotAddedToQuickAddItem()
         {
             var sut = CreateSut(out var calendar, out var config);
             config.DayOffset = -2;
-            calendar.Events.Add(CreateEvent("Reminder two days ago", DateTime.Now));
-            calendar.Events.Add(CreateEvent("Reminder one days ago", DateTime.Now.AddDays(1)));
-            calendar.Events.Add(CreateEvent("Reminder today", DateTime.Now.AddDays(2)));
-            calendar.Events.Add(CreateEvent("Reminder tomorrow", DateTime.Now.AddDays(3)));
+            calendar.Events.Add(CreateEvent("Reminder two days ago", DateTime.UtcNow));
+            calendar.Events.Add(CreateEvent("Reminder one days ago", DateTime.UtcNow.AddDays(1)));
+            calendar.Events.Add(CreateEvent("Reminder today", DateTime.UtcNow.AddDays(2)));
+            calendar.Events.Add(CreateEvent("Reminder tomorrow", DateTime.UtcNow.AddDays(3)));
 
             sut.CreateQuickAddItems().Should().OnlyContain(c => c.Text.Contains("today") || c.Text.Contains("tomorrow"));
         }

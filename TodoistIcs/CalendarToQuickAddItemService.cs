@@ -27,7 +27,7 @@ public class CalendarToQuickAddItemService
         var isExcludedByIgnoreFilter = _config.IgnoredEvents.Any(ignorePattern => Regex.IsMatch(calendarEvent.Summary, ignorePattern));
         var today = DateTime.Now.Date;
         var eventDay = AdjustedEventDate(calendarEvent).Date;
-        var isExcludedAsInPast = today > eventDay;
+        var isExcludedAsInPast = today > eventDay.ToDateTime(TimeOnly.MinValue);
         return !(isExcludedByIgnoreFilter || isExcludedAsInPast);
     }
 
@@ -45,11 +45,17 @@ public class CalendarToQuickAddItemService
             quickAddText += $" #{_config.Project}";
         }
 
-        quickAddText += $" p{(int)_config.Priority}";
+        quickAddText += $" {ApiPriorityToQuickAddPriority()}";
         return new QuickAddItem(quickAddText);
     }
 
-    private IDateTime AdjustedEventDate(CalendarEvent calendarEvent)
+    private string ApiPriorityToQuickAddPriority()
+    {
+        var apiPriority = (int)_config.Priority;
+        return $"p{5 - apiPriority}";
+    }
+
+    private CalDateTime AdjustedEventDate(CalendarEvent calendarEvent)
     {
         return calendarEvent.DtStart.AddDays(_config.DayOffset);
     }

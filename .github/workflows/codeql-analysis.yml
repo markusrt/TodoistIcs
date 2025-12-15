@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 10.0.x
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
@@ -31,8 +31,8 @@ jobs:
         queries: security-and-quality
         languages: csharp
 
-    - name: Build with dotnet
-      run: dotnet build --configuration Release TodoistIcs.sln
+    - name: Test with dotnet
+      run: dotnet test --configuration Release TodoistIcs.sln
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
