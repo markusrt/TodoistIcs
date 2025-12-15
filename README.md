@@ -6,7 +6,7 @@ past are excluded via filtering.
 
 ## Build and code quality
 
-[![CodeQL](https://github.com/markusrt/TodoistIcs/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/markusrt/TodoistIcs/actions/workflows/codeql-analysis.yml)
+[![Build with CodeQL](https://github.com/markusrt/TodoistIcs/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/markusrt/TodoistIcs/actions/workflows/codeql-analysis.yml)
 
 ## How to use the tool
 
